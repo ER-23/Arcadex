@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "nombre": "Xbox series x",
+    "precio": 15000,
+    "cantidad": 10,
+    "tipo": "consola",
+    "_id": "86b90254-e482-4485-8f33-6429db95d19c"
+  },
+  {
+    "nombre": "Playstation 5",
+    "precio": 15000,
+    "cantidad": 15,
+    "tipo": "consola",
+    "_id": "91af529a-bbf6-432e-97b7-046220bc74f4"
+  },
+  {
+    "nombre": "Audifonos",
+    "precio": 1000,
+    "cantidad": 32,
+    "tipo": "accesorio",
+    "_id": "c11d7c3b-fd31-4238-833d-012a04b644b8"
+  }
+]
