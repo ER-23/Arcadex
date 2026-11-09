@@ -2,7 +2,7 @@ import Usuario from "../models/Usuario.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-export const iniciarSesion = async (req, res) => {
+export const iniciarSesion = async (req, res, next) => {
     try {
         const { correo, password } = req.body
 

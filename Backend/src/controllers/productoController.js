@@ -1,7 +1,7 @@
 import Producto from "../models/Producto.js";
 
 //Obtener todos los productos
-export const obtenerProductos = async (req,res) => {
+export const obtenerProductos = async (req, res, next) => {
     try {
         const productos = await Producto.find();
 
@@ -11,7 +11,7 @@ export const obtenerProductos = async (req,res) => {
     }
 };
 
-export const obtenerProducto = async (req, res) => {
+export const obtenerProducto = async (req, res, next) => {
     try {
         const producto = await Producto.findById(req.params.id);
 
@@ -27,7 +27,7 @@ export const obtenerProducto = async (req, res) => {
     }
 };
 
-export const crearProducto = async (req, res) => {
+export const crearProducto = async (req, res, next) => {
     try {
         const nuevoProducto = await Producto.create(req.body);
 
@@ -38,7 +38,7 @@ export const crearProducto = async (req, res) => {
     }
 };
 
-export const actualizarProducto = async (req, res) => {
+export const actualizarProducto = async (req, res, next) => {
     try {
         const producto = await Producto.findByIdAndUpdate(
         
@@ -59,12 +59,11 @@ export const actualizarProducto = async (req, res) => {
         res.status(200).json(producto);
 
     } catch (error) {
-        error.status = 400;
         next(error);
     }
 }
 
-export const eliminarProducto = async (req, res) => {
+export const eliminarProducto = async (req, res, next) => {
     try {
         const producto = await Producto.findByIdAndDelete(req.params.id);
 
@@ -78,7 +77,6 @@ export const eliminarProducto = async (req, res) => {
             mensaje: "Producto eliminado correctamente"
         });
     } catch (error) {
-        error.status = 400;
         next(error);
     }
 }
