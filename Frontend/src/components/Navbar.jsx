@@ -8,7 +8,7 @@ function Navbar() {
             <div className="nav-enlaces">
                 <Link to="/">Inicio</Link>
                 <Link to="/productos">Productos</Link>
-                <Link to="/login">Administradores</Link>
+                <Link to="/login">Usuario</Link>
             </div>
         </nav>
     )

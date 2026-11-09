@@ -1,28 +1,51 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { iniciarSesion } from "../services/authService";
+import { iniciarSesion, crearUsuario } from "../services/authService";
 
 function Login() {
     const navigate = useNavigate();
 
+    const [modo, setModo] = useState("login");
+
+    const [nombre, setNombre] = useState("");
     const [correo, setCorreo] = useState("");
     const [password, setPassword] = useState("");
+
     const [error, setError] = useState("");
+    const [mensaje, setMensaje] = useState("");
     const [cargando, setCargando] = useState(false);
 
-    async function manejarLogin(e) {
+    async function manejarSubmit(e) {
         e.preventDefault();
 
         try {
             setCargando(true);
             setError("");
+            setMensaje("");
 
-            await iniciarSesion({
-                correo,
-                password
-            });
+            if (modo === "login") {
+                await iniciarSesion({
+                    correo,
+                    password
+                });
 
-            navigate("/productos");
+                navigate("/");
+
+            } else {
+                const respuesta = await crearUsuario({
+                    nombre,
+                    correo,
+                    password
+                });
+
+                setMensaje(respuesta.mensaje);
+
+                setNombre("");
+                setCorreo("");
+                setPassword("");
+
+                setModo("login");
+            }
 
         } catch (error) {
             setError(error.message);
@@ -32,35 +55,89 @@ function Login() {
         }
     }
 
+    function cambiarModo() {
+        setModo(modo === "login" ? "registro" : "login");
+
+        setError("");
+        setMensaje("");
+
+        setNombre("");
+        setCorreo("");
+        setPassword("");
+    }
+
     return (
         <main className="login">
-            <h1>Acceso de administrador</h1>
+            <div className="login-contenido">
+                <h1>
+                    {modo === "login" 
+                        ? "Iniciar sesión"
+                        : "Crear una cuenta"}
+                </h1>
 
-            <form onSubmit={manejarLogin}>
+                <p className="login-descripcion">
+                    {modo === "login"
+                        ? "Inicia sesión para continuar."
+                        : "Regístrate para crear tu cuenta."}
+                </p>
 
-                <label>Correo electrónico</label>
-                <input
-                    type="email"
-                    value={correo}
-                    onChange={(e) => setCorreo(e.target.value)}
-                    required
-                />
+                <form className="login-formulario" onSubmit={manejarSubmit}>
 
-                <label>Contraseña</label>
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
+                    {modo === "registro" && (
+                        <>
+                            <label>Nombre</label>
+                            <input
+                                type="text"
+                                value={nombre}
+                                onChange={(e) => setNombre(e.target.value)}
+                                required
+                            />
+                        </>
+                    )}
 
-                {error && <p>{error}</p>}
+                    <label>Correo electrónico</label>
+                    <input
+                        type="email"
+                        value={correo}
+                        onChange={(e) => setCorreo(e.target.value)}
+                        required
+                    />
 
-                <button type="submit" disabled={cargando}>
-                    {cargando ? "Ingresando..." : "Iniciar sesión"}
-                </button>
+                    <label>Contraseña</label>
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
 
-            </form>
+                    {error && <p className="login-mensaje login-error">{error}</p>}
+                    {mensaje && <p className="login-mensaje login-exito">{mensaje}</p>}
+
+                    <button type="submit" disabled={cargando}>
+                        {cargando 
+                            ? "Ingresando..." 
+                            : "Iniciar sesión"}
+                    </button>
+
+                </form>
+                
+                <div className="login-cambiar">
+                    {modo === "login"
+                        ? "¿No tienes una cuenta?" 
+                        : "¿Ya tienes una cuenta?"}
+
+                    <button 
+                        type="button"
+                        onClick={cambiarModo}
+                        disabled={cargando}
+                    >
+                        {modo === "login" 
+                            ? "Registrarse" 
+                            : "Iniciar sesión"}
+                    </button>
+                </div>
+            </div>
         </main>
     );
 }

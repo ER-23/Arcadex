@@ -22,6 +22,24 @@ export async function iniciarSesion(credenciales) {
     return datos;
 }
 
+export async function crearUsuario(usuario) {
+    const respuesta = await fetch(`${API_URL}/registro`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(usuario)
+    });
+
+    const datos = await respuesta.json();
+
+    if (!respuesta.ok) {
+        throw new Error(datos.mensaje || "Error al crear usuario");
+    }
+
+    return datos;
+}
+
 export function obtenerToken() {
     return sessionStorage.getItem("token");
 }

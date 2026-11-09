@@ -69,43 +69,46 @@ function FormularioProducto({ onGuardar, onCerrar, productoEditar }) {
                     required 
                 />
 
-                <label>Tipo de producto:</label>
+                <fieldset>
+                    <legend>Tipo de producto:</legend>
 
-                <div className="opciones-radio">
-                    <label>
-                        <input 
-                            type="radio" 
-                            name="tipo" 
-                            value="juegos" 
-                            checked={tipo === "juegos"}
-                            onChange={(e) => setTipo(e.target.value)}
-                            required 
-                        />
-                        Videojuegos
-                    </label>
+                    <div className="opciones-radio">
+                        <label>
+                            <input 
+                                type="radio" 
+                                name="tipo" 
+                                value="juegos" 
+                                checked={tipo === "juegos"}
+                                onChange={(e) => setTipo(e.target.value)}
+                                required 
+                            />
+                            Videojuegos
+                        </label>
 
-                    <label>
-                        <input 
-                            type="radio" 
-                            name="tipo" 
-                            value="consola" 
-                            checked={tipo === "consola"}
-                            onChange={(e) => setTipo(e.target.value)}
-                        />
-                        Consolas
-                    </label>
+                        <label>
+                            <input 
+                                type="radio" 
+                                name="tipo" 
+                                value="consola" 
+                                checked={tipo === "consola"}
+                                onChange={(e) => setTipo(e.target.value)}
+                            />
+                            Consolas
+                        </label>
 
-                    <label>
-                        <input 
-                            type="radio" 
-                            name="tipo" 
-                            value="accesorio" 
-                            checked={tipo === "accesorio"}
-                            onChange={(e) => setTipo(e.target.value)}
-                        />
-                        Accesorios
-                    </label>
-                </div>
+                        <label>
+                            <input 
+                                type="radio" 
+                                name="tipo" 
+                                value="accesorio" 
+                                checked={tipo === "accesorio"}
+                                onChange={(e) => setTipo(e.target.value)}
+                            />
+                            Accesorios
+                        </label>
+                    </div>
+                </fieldset>
+                
 
                 <div className="botones-opuestos">
                     <button 
