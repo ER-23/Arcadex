@@ -5,9 +5,11 @@ const verificarToken = (req, res, next) => {
         const authHeader = req.headers.authorization;
 
         if (!authHeader || !authHeader.startsWith("Bearer ")) {
-            return res.status(401).json({
-                mensaje: "Acceso no autorizado"
-            });
+            const error = new Error("Acceso no autorizado");
+
+            error.status = 401;
+
+            throw error;
         }
 
         const token = authHeader.split(" ")[1];
@@ -22,9 +24,13 @@ const verificarToken = (req, res, next) => {
         next();
 
     } catch (error) {
-        return res.status(401).json({
-            mensaje: "Token inválido o expirado"
-        });
+        if (error.name === "JsonWebTokenError" ||
+            error.name === "TokenExpiredError" ||
+            error.name === "NotBeforeError") {
+
+            error.status = 401;
+        }
+        next(error);
     }
 };
 

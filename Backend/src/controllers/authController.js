@@ -9,9 +9,9 @@ export const iniciarSesion = async (req, res) => {
         const usuario = await Usuario.findOne({ correo });
 
         if(!usuario) {
-            return res.status(401).json({
-                mensaje: "Credenciales incorrectas"
-            });
+            const error = new Error("Credenciales incorrectas");
+            error.status = 401;
+            throw error;
         }
 
         const passwordValido = await bcrypt.compare(
@@ -20,9 +20,9 @@ export const iniciarSesion = async (req, res) => {
         );
 
         if (!passwordValido) {
-            return res.status(401).json({
-                mensaje: "Credenciales incorrectas"
-            });
+            const error = new Error("Credenciales incorrectas");
+            error.status = 401;
+            throw error;
         }
 
         const token = jwt.sign(
@@ -41,9 +41,7 @@ export const iniciarSesion = async (req, res) => {
             }
         });
     } catch (error) {
-        res.status(500).json({
-            mensaje: "Error al iniciar sesion",
-            error: error.message
-        });
+        error.status = 500;
+        next(error);
     }
 };

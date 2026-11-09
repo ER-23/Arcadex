@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 import conectarDB from "./config/database.js";
+import rutaNoEncontrada from "./middleware/rutaNoExistente.js";
+import manejarErrores from "./middleware/errorMiddleware.js";
 import productoRoutes from "./routes/productoRoutes.js";
 import authRoutes from "./routes/authRoutes.js"
 
@@ -19,6 +21,10 @@ app.use("/api/auth", authRoutes);
 app.get("/", (req, res) => {
     res.send("Bienvenido a la API de Arcadex");
 });
+
+app.use(rutaNoEncontrada);
+
+app.use(manejarErrores);
 
 const PORT = process.env.PORT || 3000;
 
