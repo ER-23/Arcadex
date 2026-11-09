@@ -41,7 +41,58 @@ export const iniciarSesion = async (req, res, next) => {
             }
         });
     } catch (error) {
-        error.status = 500;
+        if (!error.status) {
+            error.status = 500;
+        }
+        
+        next(error);
+    }
+};
+
+export const crearUsuario = async (req, res, next) => {
+    try {
+        const { nombre, correo, password } = req.body;
+
+        // Verificar que se reciban todos los datos
+        if (!nombre || !correo || !password) {
+            const error = new Error("Todos los campos son obligatorios");
+            error.status = 400;
+            throw error;
+        }
+
+        // Comprobar si el correo ya está registrado
+        const usuarioExistente = await Usuario.findOne({ correo });
+
+        if (usuarioExistente) {
+            const error = new Error("El correo ya está registrado");
+            error.status = 409;
+            throw error;
+        }
+
+        // Encriptar contraseña
+        const passwordEncriptada = await bcrypt.hash(password, 10);
+
+        // Crear usuario
+        const nuevoUsuario = await Usuario.create({
+            nombre,
+            correo,
+            password: passwordEncriptada
+        });
+
+        res.status(201).json({
+            mensaje: "Usuario creado correctamente",
+            usuario: {
+                id: nuevoUsuario._id,
+                nombre: nuevoUsuario.nombre,
+                correo: nuevoUsuario.correo
+            }
+        });
+
+    } catch (error) {
+        if (error.code === 11000) {
+            error.status = 409;
+        }
+
         next(error);
     }
 };
