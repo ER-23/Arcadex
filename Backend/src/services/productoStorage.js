@@ -10,6 +10,9 @@ const rutaArchivo = path.join(__dirname, '../data/productos.json');
 // Leer todos los productos
 export const leerProductos = async () => {
     const contenido = await fs.readFile(rutaArchivo, 'utf-8');
+
+    console.log("Archivo leido correctamente");
+
     return JSON.parse(contenido);
 };
 
@@ -20,4 +23,6 @@ export const guardarProductos = async (productos) => {
         JSON.stringify(productos, null, 2),
         'utf-8'
     );
+
+    console.log("Productos guardados correctamente");
 };

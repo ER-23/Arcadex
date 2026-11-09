@@ -36,6 +36,8 @@ const validarProducto = (datos) => {
         );
     }
 
+    console.log(`El producto: ${nombre.trim()} es valido.`)
+
     return {
         nombre: nombre.trim(),
         precio: Number(precio),
@@ -50,7 +52,9 @@ export const obtenerProductos = async (req, res, next) => {
         const productos = await leerProductos();
 
         res.status(200).json(productos);
+        console.log("Productos obtenidos correctamente")
     } catch (error) {
+        console.log("Error al obtener los productos")
         next(error);
     }
 };
@@ -70,7 +74,9 @@ export const obtenerProducto = async (req, res, next) => {
         }
 
         res.status(200).json(producto);
+        console.log("Producto obtenido correctamente")
     } catch (error) {
+        console.log("Error al obtener el producto")
         next(error);
     }
 };
@@ -91,7 +97,9 @@ export const crearProducto = async (req, res, next) => {
         await guardarProductos(productos);
 
         res.status(201).json(nuevoProducto);
+        console.log("Producto creado correctamente")
     } catch (error) {
+        console.log("Error al crear el producto")
         next(error);
     }
 };
@@ -125,8 +133,9 @@ export const actualizarProducto = async (req, res, next) => {
         await guardarProductos(productos);
 
         res.status(200).json(productoActualizado);
-
+        console.log("Producto actualizado correctamente")
     } catch (error) {
+        console.log("Error al actualizar el producto")
         next(error);
     }
 };
@@ -153,7 +162,9 @@ export const eliminarProducto = async (req, res, next) => {
             mensaje: 'Producto eliminado correctamente'
         });
 
+        console.log("Producto eliminado correctamente")
     } catch (error) {
+        console.log("Error al eliminar el producto")
         next(error);
     }
 }

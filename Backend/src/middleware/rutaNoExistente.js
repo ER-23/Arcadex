@@ -5,6 +5,8 @@ const rutaNoEncontrada = (req, res, next) => {
 
     error.status = 404;
 
+    console.log(`Se trató de llegar a la ruta: ${req.originalUrl}`)
+
     next(error);
 };
 

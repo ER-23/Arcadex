@@ -40,11 +40,16 @@ export const iniciarSesion = async (req, res, next) => {
                 correo: usuario.correo
             }
         });
+
+        console.log("Inicio de sesion exitoso")
+
     } catch (error) {
         if (!error.status) {
             error.status = 500;
         }
         
+        console.log("Error al iniciar sesion")
+
         next(error);
     }
 };
@@ -88,10 +93,14 @@ export const crearUsuario = async (req, res, next) => {
             }
         });
 
+        console.log("Nuevo usuario creado con exito")
+
     } catch (error) {
         if (error.code === 11000) {
             error.status = 409;
         }
+
+        console.log("Error al crear el nuevo usuario")
 
         next(error);
     }

@@ -21,6 +21,8 @@ const verificarToken = (req, res, next) => {
 
         req.usuarioId = verificado.id;
 
+        console.log("Se verificó el token correctamente");
+        
         next();
 
     } catch (error) {
@@ -30,6 +32,9 @@ const verificarToken = (req, res, next) => {
 
             error.status = 401;
         }
+
+        console.log("Fallo al verificar el token");
+
         next(error);
     }
 };
