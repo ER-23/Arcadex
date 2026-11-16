@@ -16,7 +16,11 @@ const productoSchema = new mongoose.Schema({
     cantidad: {
         type: Number,
         required: true,
-        min: 0
+        min: 0,
+        validate: {
+            validator: Number.isInteger,
+            message: "La cantidad debe ser un número entero"
+        }
     },
 
     tipo: {
