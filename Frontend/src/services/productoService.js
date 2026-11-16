@@ -1,6 +1,6 @@
 import { obtenerToken } from "./authService";
 
-const API_URL = "http://localhost:3000/api/productos";
+const PRODUCTO_URL = `${API_URL}/api/productos`;
 
 function obtenerHeaders() {
     return {
@@ -10,7 +10,7 @@ function obtenerHeaders() {
 }
 
 export async function obtenerProductos() {
-    const respuesta = await fetch(API_URL);
+    const respuesta = await fetch(PRODUCTO_URL);
 
     if(!respuesta.ok) {
         throw new Error("No se pudieron obtener los productos.");
@@ -20,7 +20,7 @@ export async function obtenerProductos() {
 }
 
 export async function crearProducto(producto) {
-    const respuesta = await fetch(API_URL, {
+    const respuesta = await fetch(PRODUCTO_URL, {
         method:"POST",
         headers: obtenerHeaders(),
         body: JSON.stringify(producto)
@@ -34,7 +34,7 @@ export async function crearProducto(producto) {
 }
 
 export async function actualizarProducto(id, producto) {
-    const respuesta = await fetch(`${API_URL}/${id}`, {
+    const respuesta = await PRODUCTO_URL(`${API_URL}/${id}`, {
         method: "PUT",
         headers: obtenerHeaders(),
         body: JSON.stringify(producto)
@@ -48,7 +48,7 @@ export async function actualizarProducto(id, producto) {
 }
 
 export async function eliminarProducto(id) {
-    const respuesta =  await fetch(`${API_URL}/${id}`, {
+    const respuesta =  await PRODUCTO_URL(`${API_URL}/${id}`, {
         method:"DELETE",
         headers: obtenerHeaders()
     });

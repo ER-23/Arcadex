@@ -1,7 +1,9 @@
-const API_URL = "http://localhost:3000/api/auth";
+import API_URL from "./api.js";
+
+const AUTH_URL = `${API_URL}/api/auth`;
 
 export async function iniciarSesion(credenciales) {
-    const respuesta = await fetch(`${API_URL}/login`, {
+    const respuesta = await fetch(`${AUTH_URL}/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -23,7 +25,7 @@ export async function iniciarSesion(credenciales) {
 }
 
 export async function crearUsuario(usuario) {
-    const respuesta = await fetch(`${API_URL}/registro`, {
+    const respuesta = await fetch(`${AUTH_URL}/registro`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
