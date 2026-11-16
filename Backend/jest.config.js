@@ -1,6 +1,6 @@
 export default {
     testEnvironment: "node",
-    transform: "",
+    transform: {},
     clearMocks: true,
-    restoreMoks: true
+    restoreMocks: true
 };
