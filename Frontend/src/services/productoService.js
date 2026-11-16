@@ -1,3 +1,4 @@
+import API_URL from "./api.js";
 import { obtenerToken } from "./authService";
 
 const PRODUCTO_URL = `${API_URL}/api/productos`;
