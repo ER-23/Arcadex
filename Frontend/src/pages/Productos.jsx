@@ -112,8 +112,9 @@ function Productos () {
             <main>
                 {popupAbierto && (
                     <FormularioProducto
+                        key={editandoProducto?._id ?? "nuevo"}
                         onGuardar={manejarGuardar}
-                        onCerrar={() => setPopupAbierto(false)}
+                        onCerrar={cerrarPopup}
                         productoEditar={editandoProducto}
                     />
                 )}

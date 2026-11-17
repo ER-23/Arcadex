@@ -1,25 +1,10 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
 function FormularioProducto({ onGuardar, onCerrar, productoEditar }) {
-    const [nombre, setNombre] = useState("");
-    const [precio, setPrecio] = useState("");
-    const [cantidad, setCantidad] = useState("");
-    const [tipo, setTipo] = useState("");
-
-    useEffect(() => {
-        if (productoEditar) {
-            setNombre(productoEditar.nombre);
-            setPrecio(productoEditar.precio);
-            setCantidad(productoEditar.cantidad);
-            setTipo(productoEditar.tipo);
-        } else {
-            setNombre("");
-            setPrecio("");
-            setCantidad("");
-            setTipo("");
-        }
-        
-    }, [productoEditar])
+    const [nombre, setNombre] = useState(productoEditar?.nombre ?? "");
+    const [precio, setPrecio] = useState(productoEditar?.precio?.toString() ?? "");
+    const [cantidad, setCantidad] = useState(productoEditar?.cantidad?.toString() ?? "");
+    const [tipo, setTipo] = useState(productoEditar?.tipo ?? "");
 
     function manejarEnvio(e) {
         e.preventDefault();
